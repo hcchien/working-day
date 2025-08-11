@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "key": "projects",
+      "label": "PROJECTS",
+      "items": [
+        {
+          "title": "Scooters in Taipei",
+          "slug": "scootersintaipei",
+          "image": "portrait.jpg",
+          "description": "A long-term observation and documentation about scooters in Taipei since 2012."
+        },
+        {
+          "title": "1139KM",
+          "slug": "1139km",
+          "image": "portrait.jpg",
+          "description": "Exploring the coastline of Taiwan through photographs."
+        }
+      ]
+    }
+  ]
+}
+
+

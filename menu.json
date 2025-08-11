@@ -1,0 +1,10 @@
+{
+  "menu": [
+    { "label": "Home", "href": "index.html" },
+    { "label": "Projects", "href": "projects.html" },
+    { "label": "Publish & Exhibitions", "href": "publish.html" },
+    { "label": "Bio", "href": "bio.html" }
+  ]
+}
+
+

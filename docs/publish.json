@@ -1,0 +1,28 @@
+{
+  "sections": [
+    {
+      "key": "publish",
+      "label": "PUBLISH",
+      "items": [
+        {
+          "title": "1139KM",
+          "image": "portrait.jpg",
+          "description": "I choose to use the camera to express my own ideas which were not related to personal identy. I have also tried to use the computer to change something which I hope can be different. \"Scooters in Taipei\" is my first topic, started in 2012 and continuing until this year. During this period, I have also started another project \"1139KM\", which is about the coastline of Taiwan."
+        }
+      ]
+    },
+    {
+      "key": "exhibition",
+      "label": "EXHIBITIONS",
+      "items": [
+        {
+          "title": "1139KM",
+          "image": "portrait.jpg",
+          "description": "I choose to use the camera to express my own ideas which were not related to personal identy. I have also tried to use the computer to change something which I hope can be different. \"Scooters in Taipei\" is my first topic, started in 2012 and continuing until this year. During this period, I have also started another project \"1139KM\", which is about the coastline of Taiwan."
+        }
+      ]
+    }
+  ]
+}
+
+
