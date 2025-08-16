@@ -90,13 +90,15 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .menu-items { display: flex; gap: 16px; }
 .menu-items.open { display: block; }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .uh {
     padding: 20px 16px;
     position: relative;
     display: block; /* 手機版改回區塊，讓選單往下展開 */
   }
   .gallery, .bio, .history { padding: 20px 16px 60px 16px; }
+  /* 專案頁：移除左右內距，讓圖片能達到視窗寬度的 45% */
+  .history { padding-left: 0; padding-right: 0; }
   .publish-item { padding: 12px 0 40px 0; }
   .uh-menu {
     width: auto;
@@ -122,17 +124,31 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .menu-item { display: block; margin: 8px 0; text-align: left; }
   .menu-item a { display: inline-block; padding: 6px 0; }
 
-  /* 內容直向堆疊避免寬度超出 */
-  .publish-cover, .publish-desc { width: 100%; display: block; float: none; padding: 0; margin: 0; }
-  .publish-image { max-width: 100%; }
-  .publish-desc { margin-right: 0; padding: 12px 0 0 0; }
+  /* 手機：圖片與標題並排（左圖右文），加上間距 */
+  .publish-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0 28px 0; }
+  .publish-cover { flex: 0 0 48%; max-width: 48%; margin: 0; padding: 0; height: clamp(180px, 44vw, 260px); overflow: hidden; }
+  .publish-desc { flex: 1 1 52%; max-width: 52%; margin-right: 0; padding: 0; }
+  .publish-image { width: 100%; max-width: 100%; height: 100%; display: block; object-fit: cover; }
   /* 手機版：隱藏描述段落，保留標題 */
   .publish-item p { display: none; }
+  /* 手機：標題字級縮小 */
+  .publish-title { font-size: 15px; line-height: 1.35; }
 
   /* Bio 區塊直向堆疊 */
   .portrait { width: 100%; display: block; }
   .portrait-image { max-width: 100%; }
   .description { width: 100%; display: block; float: none; padding: 12px 0 0 0; }
+}
+
+/* tablet: 641px–1024px */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* 平板：縮小頁面左右內距，放大圖片比例，確保圖文同排且圖片不顯小 */
+  .uh { padding: 40px 24px; }
+  .gallery, .bio, .history { padding: 32px 24px 90px 24px; }
+  .publish-item { display: flex; align-items: flex-start; gap: 16px; }
+  .publish-cover { flex: 0 0 50%; max-width: 50%; margin: 0; padding: 0; display: block; height: clamp(220px, 36vw, 360px); overflow: hidden; }
+  .publish-image { width: 100%; height: 100%; display: block; max-width: 100%; object-fit: cover; }
+  .publish-desc { flex: 1 1 50%; max-width: 50%; display: block; float: none; margin-right: 0; padding: 0; }
 }
 
 .gallery {
@@ -206,7 +222,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   white-space: nowrap; border: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .slideshow { width: 100%; height: 50vh; min-height: 240px; margin: 0 0 20px 0; }
   .sequence { width: 100%; margin: 0; }
 }
