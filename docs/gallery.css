@@ -291,7 +291,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     display: inline;
 }
 
-.publish-image { max-width: 30%; height: auto; }
+.publish-image { width: 100%; height: auto; display: block; }
 
 .publish-desc {
     width: 55%;
@@ -325,4 +325,10 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 .exhibition {
     padding-top: 50px;
+}
+
+/* 放在檔尾以確保優先度：修正 641–1024px 時文字區域右側 padding / margin 過大 */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .publish-desc { padding: 0; margin-right: 0; float: none; display: block; }
+  .publish-item { padding: 16px 0 2px 0; }
 }
