@@ -33,8 +33,37 @@ rsync -av \
   --exclude "projects.html" \
   ./ "${OUT_DIR}"/
 
-echo "[2.5/3] Optimize project images only (to projects_data/<slug>/images)"
-python3 ./optimize_projects.py
+CACHE_DIR=".cache"
+mkdir -p "${CACHE_DIR}"
+
+# Detect whether raw images changed; if unchanged, skip optimization
+IMAGES_DIR="images"
+LATEST_MTIME=0
+if [ -d "${IMAGES_DIR}" ]; then
+  # macOS compatible stat -f %m to get epoch mtime
+  # Only take the first (latest) number; if empty, default to 0
+  LATEST_MTIME=$(find "${IMAGES_DIR}" -type f -exec stat -f "%m" {} + 2>/dev/null | sort -nr | awk 'NR==1{print; exit}')
+fi
+LATEST_MTIME=${LATEST_MTIME:-0}
+LATEST_MTIME=$(printf "%s" "${LATEST_MTIME}" | tr -d '\r' | awk 'NF{print $1}' )
+LATEST_MTIME=${LATEST_MTIME:-0}
+
+STAMP_FILE="${CACHE_DIR}/images_latest_mtime"
+PREV_MTIME=$(sed -n '1p' "${STAMP_FILE}" 2>/dev/null || true)
+PREV_MTIME=${PREV_MTIME:-0}
+PREV_MTIME=$(printf "%s" "${PREV_MTIME}" | tr -d '\r' | awk 'NF{print $1}')
+PREV_MTIME=${PREV_MTIME:-0}
+
+if [[ ${LATEST_MTIME} -eq 0 ]]; then
+  echo "[2.5/3] No raw images found; skip optimization"
+elif [[ ${PREV_MTIME} -ne 0 && ${LATEST_MTIME} -le ${PREV_MTIME} ]]; then
+  echo "[2.5/3] Images unchanged; skip optimization"
+else
+  echo "[2.5/3] Optimize project images only (to projects_data/<slug>/images)"
+  python3 ./optimize_projects.py
+  # Update stamp only if we actually had images
+  if [[ ${LATEST_MTIME} -ne 0 ]]; then echo "${LATEST_MTIME}" > "${STAMP_FILE}"; fi
+fi
 
 echo "[2.6/3] Copy optimized project images into ${OUT_DIR}/projects_data"
 mkdir -p "${OUT_DIR}/projects_data"

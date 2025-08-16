@@ -16,3 +16,6 @@ images/**
 # Keep docs/ tracked for GitHub Pages
 
 
+# Build cache
+.cache/
+
