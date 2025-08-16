@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 TEMPLATE = ROOT / 'publish.template.html'
-DATA = ROOT / 'publish.json'
-OUTPUT = ROOT / 'publish.static.html'
+LOCALE = os.environ.get('LOCALE', 'en').strip() or 'en'
+IS_ZH = LOCALE.lower() == 'zh'
+DATA = ROOT / ('publish.zh.json' if IS_ZH and (ROOT / 'publish.zh.json').exists() else 'publish.json')
+OUT_DIR = ROOT / ('docs/zh' if IS_ZH else 'docs')
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUTPUT = OUT_DIR / 'publish.static.html'
+ASSET_PREFIX = '../' if IS_ZH else ''
 
 
 def render_items(items):
@@ -31,17 +37,20 @@ def render_items(items):
 
             image_html = (
                 f'<picture>'
-                f'<source type="image/webp" media="(max-width: 640px)" srcset="{candidate_webp(960)} 1x, {candidate_webp(1600)} 2x">'
-                f'<source type="image/webp" media="(max-width: 1280px)" srcset="{candidate_webp(1280)} 1x, {candidate_webp(1920)} 2x">'
-                f'<source type="image/webp" media="(min-width: 1281px)" srcset="{candidate_webp(1920)} 1x, {candidate_webp(2560)} 2x">'
-                f'<source media="(max-width: 640px)" srcset="{candidate(960)} 1x, {candidate(1600)} 2x">'
-                f'<source media="(max-width: 1280px)" srcset="{candidate(1280)} 1x, {candidate(1920)} 2x">'
-                f'<source media="(min-width: 1281px)" srcset="{candidate(1920)} 1x, {candidate(2560)} 2x">'
-                f'<img class="publish-image" src="{candidate(1920)}" alt="{title}">'
+                f'<source type="image/webp" media="(max-width: 640px)" srcset="{ASSET_PREFIX}{candidate_webp(960)} 1x, {ASSET_PREFIX}{candidate_webp(1600)} 2x">'
+                f'<source type="image/webp" media="(max-width: 1280px)" srcset="{ASSET_PREFIX}{candidate_webp(1280)} 1x, {ASSET_PREFIX}{candidate_webp(1920)} 2x">'
+                f'<source type="image/webp" media="(min-width: 1281px)" srcset="{ASSET_PREFIX}{candidate_webp(1920)} 1x, {ASSET_PREFIX}{candidate_webp(2560)} 2x">'
+                f'<source media="(max-width: 640px)" srcset="{ASSET_PREFIX}{candidate(960)} 1x, {ASSET_PREFIX}{candidate(1600)} 2x">'
+                f'<source media="(max-width: 1280px)" srcset="{ASSET_PREFIX}{candidate(1280)} 1x, {ASSET_PREFIX}{candidate(1920)} 2x">'
+                f'<source media="(min-width: 1281px)" srcset="{ASSET_PREFIX}{candidate(1920)} 1x, {ASSET_PREFIX}{candidate(2560)} 2x">'
+                f'<img class="publish-image" src="{ASSET_PREFIX}{candidate(1920)}" alt="{title}">'
                 f'</picture>'
             )
         else:
-            image_html = f'<img class="publish-image" src="{image}" alt="{title}"/>'
+            img_src = image
+            if ASSET_PREFIX and not img_src.startswith(('http://','https://','/')):
+                img_src = ASSET_PREFIX + img_src
+            image_html = f'<img class="publish-image" src="{img_src}" alt="{title}"/>'
 
         # 組合時間/地點（若有）
         meta_html = ''
@@ -81,6 +90,13 @@ def main():
         .replace('<!--PUBLISH_SECTION-->', publish_items_html)
         .replace('<!--EXHIBITION_SECTION-->', exhibition_items_html)
     )
+
+    if IS_ZH:
+        out_html = (out_html
+            .replace('href="gallery.css"', 'href="../gallery.css"')
+            .replace('src="menu.js"', 'src="../menu.js"')
+            .replace('src="slider.js"', 'src="../slider.js"')
+        )
 
     OUTPUT.write_text(out_html, encoding='utf-8')
     print(f'Generated {OUTPUT.name}')

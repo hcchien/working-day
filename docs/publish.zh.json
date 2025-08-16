@@ -1,0 +1,32 @@
+{
+  "sections": [
+    {
+      "key": "publish",
+      "label": "出版",
+      "items": [
+        {
+          "title": "1139KM",
+          "time": "2018",
+          "location": "",
+          "imageBase": "projects_data/1139km/images/03.jpg",
+          "description": "我選擇用相機表達與個人身份無關的想法，也嘗試用電腦讓一些事物變得不一樣。《台北的機車》是我自 2012 年開始、並持續至今的第一個主題。同時期我也展開另一個計畫《1139KM》，主題是台灣的海岸線。"
+        }
+      ]
+    },
+    {
+      "key": "exhibition",
+      "label": "展覽",
+      "items": [
+        {
+          "title": "台北的機車",
+          "time": "2013",
+          "location": "TIVAC",
+          "imageBase": "projects_data/scootersintaipei/images/03.jpg",
+          "description": "我選擇用相機表達與個人身份無關的想法，也嘗試用電腦讓一些事物變得不一樣。《台北的機車》是我自 2012 年開始、並持續至今的第一個主題。同時期我也展開另一個計畫《1139KM》，主題是台灣的海岸線。"
+        }
+      ]
+    }
+  ]
+}
+
+

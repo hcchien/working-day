@@ -5,10 +5,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 DOCS = ROOT / 'docs'
-MENU_JSON = ROOT / 'menu.json'
+MENU_JSON_EN = ROOT / 'menu.json'
+MENU_JSON_ZH = ROOT / 'menu.zh.json'
 
 
-def build_menu_html(current_filename: str, menu_config: dict) -> str:
+def build_menu_html(current_filename: str, menu_config: dict, is_zh: bool, zh_link_prefix: str = 'zh/', en_link_prefix: str = '../') -> str:
     items = []
     for entry in menu_config.get('menu', []):
         label = entry.get('label', '')
@@ -22,8 +23,27 @@ def build_menu_html(current_filename: str, menu_config: dict) -> str:
         else:
             items.append(f'<div class="{item_class}">{label}</div>')
     items_html = '\n                '.join(items)
+
+    # 語系切換：獨立固定在標題列的 Locale Switch，不佔用可折疊選單
+    if is_zh:
+        locale_switch = (
+            '<div class="locale-switch">'
+            f'<a href="{en_link_prefix}{current_filename}">EN</a>'
+            ' / '
+            '<span class="active">中文</span>'
+            '</div>'
+        )
+    else:
+        locale_switch = (
+            '<div class="locale-switch">'
+            '<span class="active">EN</span>'
+            ' / '
+            f'<a href="{zh_link_prefix}{current_filename}">中文</a>'
+            '</div>'
+        )
     return (
         '<button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"></button>\n'
+        f'                {locale_switch}\n'
         '                <div class="menu-items">\n'
         f'                {items_html}\n'
         '                </div>'
@@ -75,14 +95,40 @@ def inject_menu(html: str, menu_html: str) -> str:
 
 
 def main():
-    menu_config = json.loads(MENU_JSON.read_text(encoding='utf-8'))
-    for html_path in DOCS.glob('*.html'):
+    # Walk docs/ and project root recursively for html files
+    targets = list(DOCS.rglob('*.html')) + list(ROOT.glob('*.html'))
+    zh_root = ROOT / 'zh'
+    if zh_root.exists():
+        targets += list(zh_root.rglob('*.html'))
+
+    for html_path in targets:
+        # Pick menu per locale
+        is_zh = (html_path.parent.name == 'zh')
+        menu_path = MENU_JSON_ZH if is_zh and MENU_JSON_ZH.exists() else MENU_JSON_EN
+        menu_config = json.loads(menu_path.read_text(encoding='utf-8'))
+
         current_name = html_path.name
         original = html_path.read_text(encoding='utf-8')
-        menu_html = build_menu_html(current_name, menu_config)
+        # 決定語系連結前綴：
+        # - docs/*.html (英文)：zh_link_prefix = 'zh/'
+        # - docs/zh/*.html (中文)：en_link_prefix = '../'
+        # - 專案根目錄/*.html (英文)：zh_link_prefix = 'docs/zh/'
+        # - 專案根目錄/zh/*.html（若存在）：en_link_prefix = '../'（與 docs/zh 相同）
+        zh_link_prefix = 'zh/'
+        en_link_prefix = '../'
+        menu_html = build_menu_html(current_name, menu_config, is_zh, zh_link_prefix=zh_link_prefix, en_link_prefix=en_link_prefix)
         updated = inject_menu(original, menu_html)
+
+        # Ensure correct asset paths for zh pages
+        if is_zh:
+            updated = (updated
+                .replace('src="menu.js"', 'src="../menu.js"')
+                .replace('href="gallery.css"', 'href="../gallery.css"')
+                .replace('src="slider.js"', 'src="../slider.js"')
+            )
+
         html_path.write_text(updated, encoding='utf-8')
-        print(f'Injected menu into {current_name}')
+        print(f'Injected menu into {("zh/" if is_zh else "")}{current_name}')
 
 
 if __name__ == '__main__':

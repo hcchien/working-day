@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 import json
+import os
 import random
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 TEMPLATE = ROOT / 'projects.template.html'
-DATA = ROOT / 'projects.json'
-OUTPUT = ROOT / 'projects.static.html'
+LOCALE = os.environ.get('LOCALE', 'en').strip() or 'en'
+IS_ZH = LOCALE.lower() == 'zh'
+DATA = ROOT / ('projects.zh.json' if IS_ZH and (ROOT / 'projects.zh.json').exists() else 'projects.json')
+OUT_DIR = ROOT / ('docs/zh' if IS_ZH else 'docs')
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUTPUT = OUT_DIR / 'projects.static.html'
+ASSET_PREFIX = '../' if IS_ZH else ''
 
 
 def choose_random_preview_for_slug(slug: str) -> str:
@@ -61,6 +67,9 @@ def render_items(items):
                 image = Path(rnd).as_posix()
                 if image.startswith(str(ROOT.as_posix()) + '/'):
                     image = image[len(str(ROOT.as_posix()) + '/'):]
+                # 中文版加上資產前綴，確保在 docs/zh/ 下能正確引用
+                if ASSET_PREFIX and not image.startswith(('http://','https://','/')):
+                    image = ASSET_PREFIX + image
         html_parts.append(
             f'''<div class="publish-item">
   <div class="publish-cover">
@@ -83,6 +92,13 @@ def main():
     items_html = render_items(sections.get('projects', {}).get('items', []))
 
     out_html = template_html.replace('<!--PROJECTS_SECTION-->', items_html)
+
+    if IS_ZH:
+        out_html = (out_html
+            .replace('href="gallery.css"', 'href="../gallery.css"')
+            .replace('src="menu.js"', 'src="../menu.js"')
+            .replace('src="slider.js"', 'src="../slider.js"')
+        )
 
     OUTPUT.write_text(out_html, encoding='utf-8')
     print(f'Generated {OUTPUT.name}')

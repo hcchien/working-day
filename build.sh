@@ -74,26 +74,55 @@ rsync -av \
   --exclude '*' \
   ./projects_data/ "${OUT_DIR}/projects_data/"
 
-echo "[3/3] Build and replace publish.html"
+echo "[3/3] Build and replace HTML (en & zh)"
+
+# Build EN
+export LOCALE=en
 python3 build_publish.py
-mv -f publish.static.html "${OUT_DIR}/publish.html"
-
-echo "[3/3] Build and replace projects.html"
+mv -f "${OUT_DIR}/publish.static.html" "${OUT_DIR}/publish.html"
 python3 build_projects.py
-mv -f projects.static.html "${OUT_DIR}/projects.html"
-
-echo "[3/3] Build and replace index.html"
+mv -f "${OUT_DIR}/projects.static.html" "${OUT_DIR}/projects.html"
 python3 build_index.py
-mv -f index.static.html "${OUT_DIR}/index.html"
-
-echo "[3/3] Build each project pages"
+mv -f "${OUT_DIR}/index.static.html" "${OUT_DIR}/index.html"
 python3 build_project_pages.py
+python3 build_bio.py
+
+# Build ZH
+mkdir -p "${OUT_DIR}/zh"
+export LOCALE=zh
+python3 build_publish.py
+mv -f "${OUT_DIR}/zh/publish.static.html" "${OUT_DIR}/zh/publish.html"
+python3 build_projects.py
+mv -f "${OUT_DIR}/zh/projects.static.html" "${OUT_DIR}/zh/projects.html"
+python3 build_index.py
+mv -f "${OUT_DIR}/zh/index.static.html" "${OUT_DIR}/zh/index.html"
+python3 build_project_pages.py
+python3 build_bio.py
+unset LOCALE
 
 echo "[post] Inject unified header menu into docs/*.html"
 python3 inject_menu.py
 
 echo "[post] Sync docs/*.html back to project root"
 cp -f "${OUT_DIR}"/*.html ./
+
+# Also inject menu into root-level html (mirrors docs/)
+echo "[post] Re-inject menu for root-level html"
+python3 inject_menu.py
+
+# Sync zh pages to project root for local browsing
+echo "[post] Sync docs/zh/*.html to ./zh/"
+mkdir -p ./zh
+cp -f "${OUT_DIR}/zh"/*.html ./zh/
+# Inject again to adjust paths for root-level zh
+python3 inject_menu.py
+
+# Ensure root zh pages have clean names (no .static suffix)
+for f in ./zh/*.static.html; do
+  [ -e "$f" ] || continue
+  base="$(basename "$f" .static.html)"
+  mv -f "$f" "./zh/${base}.html"
+done
 
 echo "Done. Open docs/publish.html or publish.html, or serve the docs/ folder."
 

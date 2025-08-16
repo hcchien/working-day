@@ -49,6 +49,16 @@ html, body { max-width: 100%; overflow-x: hidden; }
     gap: 16px;
 }
 
+/* 語系切換固定在標題列右側，不進摺疊選單 */
+.locale-switch {
+    margin-left: 12px;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+.locale-switch a { color: #666; text-decoration: none; }
+.locale-switch .active { font-weight: bold; color: #222; }
+
 .menu-item {
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     font-size: 18px;
@@ -104,6 +114,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     width: auto;
     display: block;
   }
+  .locale-switch { position: absolute; top: 18px; right: 56px; }
   .menu-toggle {
     display: block;
     position: absolute;
@@ -146,6 +157,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .uh { padding: 40px 24px; position: relative; display: block; }
   .uh-menu { width: auto; display: block; }
   .menu-toggle { display: block; position: absolute; top: 24px; right: 24px; width: 36px; height: 36px; }
+  .locale-switch { position: absolute; top: 28px; right: 68px; }
   .menu-toggle[aria-expanded="true"] { background-image: url('mobile_menuclose.png'); }
   .menu-items { display: none; width: 100%; margin-top: 56px; gap: 0; }
   .menu-items.open { display: block; }

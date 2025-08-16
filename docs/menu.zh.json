@@ -1,0 +1,10 @@
+{
+  "menu": [
+    { "label": "首頁", "href": "index.html" },
+    { "label": "專題", "href": "projects.html" },
+    { "label": "出版與展覽", "href": "publish.html" },
+    { "label": "簡歷", "href": "bio.html" }
+  ]
+}
+
+
