@@ -18,16 +18,31 @@
     if(idx < 0) idx = 0
 
     function setActive(i){
-      i = clamp(i, 0, slides.length - 1)
+      // 循環切換
+      if(slides.length === 0) return
+      if(i < 0) i = slides.length - 1
+      if(i >= slides.length) i = 0
       slides.forEach(function(s,j){ s.classList.toggle('active', j===i) })
-      dots.forEach(function(d,j){ d.src = j===i ? 'image_blackdot.png' : 'image_greydot.png' })
+      dots.forEach(function(d,j){
+        var img = d.querySelector('img') || d
+        img.src = j===i ? 'image_blackdot.png' : 'image_greydot.png'
+        d.setAttribute('aria-selected', j===i ? 'true' : 'false')
+        d.setAttribute('tabindex', j===i ? '0' : '-1')
+      })
       idx = i
     }
 
     // 正確方向：prev 往左（上一張），next 往右（下一張）
     if(prev) prev.addEventListener('click', function(){ setActive(idx-1) })
     if(next) next.addEventListener('click', function(){ setActive(idx+1) })
-    dots.forEach(function(d){ d.addEventListener('click', function(){ setActive(parseInt(d.dataset.idx,10)) }) })
+    dots.forEach(function(d){
+      d.setAttribute('role', 'tab')
+      d.setAttribute('aria-controls', 'slide-'+d.dataset.idx)
+      d.addEventListener('click', function(){ setActive(parseInt(d.dataset.idx,10)) })
+      d.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(parseInt(d.dataset.idx,10)) }
+      })
+    })
 
     // Swipe 支援
     var startX = null
@@ -44,6 +59,15 @@
         else setActive(idx-1)        // 往右滑，上一張
       }
       startX = null
+    })
+
+    // 鍵盤左右鍵控制（聚焦於輪播時）
+    slideshow.setAttribute('tabindex','0')
+    slideshow.setAttribute('role','region')
+    slideshow.setAttribute('aria-label','Image slideshow')
+    slideshow.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowLeft') setActive(idx-1)
+      if(e.key === 'ArrowRight') setActive(idx+1)
     })
   })
 })()

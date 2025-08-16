@@ -33,6 +33,18 @@ rsync -av \
   --exclude "projects.html" \
   ./ "${OUT_DIR}"/
 
+echo "[2.5/3] Optimize project images only (to projects_data/<slug>/images)"
+python3 ./optimize_projects.py
+
+echo "[2.6/3] Copy optimized project images into ${OUT_DIR}/projects_data"
+mkdir -p "${OUT_DIR}/projects_data"
+rsync -av \
+  --prune-empty-dirs \
+  --include '*/' \
+  --include '*/images/**' \
+  --exclude '*' \
+  ./projects_data/ "${OUT_DIR}/projects_data/"
+
 echo "[3/3] Build and replace publish.html"
 python3 build_publish.py
 mv -f publish.static.html "${OUT_DIR}/publish.html"

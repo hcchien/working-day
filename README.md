@@ -68,6 +68,27 @@ python3 -m http.server 8000
 4. 儲存後等候 Pages 部署完成（第一次可能需要幾分鐘）
 
 ### 常見問題
+## 專案頁（Projects）與圖片資料結構
+
+專案列表維護在 `projects.json`，其中每個專案需要有 `slug`。每個專案頁由 `projects_data/<slug>.json` 生成，支援以下欄位：
+
+```json
+{
+  "slug": "1139km",
+  "title": "1139KM",
+  "baseDir": "images/1139km",
+  "slides": [
+    { "src": "01.jpg", "alt": "1139KM 1" },
+    { "src": "02.jpg", "alt": "1139KM 2" }
+  ]
+}
+```
+
+- `baseDir`：選擇性。提供時，會自動在相對路徑圖片前加上此目錄（便於將各專案圖片放到獨立資料夾）。
+- `slides`：圖片清單。`src` 可為相對於 `baseDir` 的檔名，或完整相對路徑/URL。
+
+建置時會輸出 `docs/<slug>.html`，並同步回根目錄。
+
 - 為什麼 `publish.html` 直接打開是空的？
   - 該檔版本使用 `fetch('publish.json')` 動態載入，`file://` 會被瀏覽器阻擋。正式部署請使用 `docs/publish.html`（已靜態化）。
 - 要新增項目？

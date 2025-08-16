@@ -1,7 +1,7 @@
 {
   "slides": [
-    { "src": "410.jpg", "alt": "Hero 1" },
-    { "src": "portrait.jpg", "alt": "Hero 2" }
+    { "src": "projects_data/scootersintaipei/images/03.jpg", "alt": "Scooters in Taipei" },
+    { "src": "projects_data/1139km/images/03.jpg", "alt": "1139KM" }
   ]
 }
 

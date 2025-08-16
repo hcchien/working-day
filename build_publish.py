@@ -14,13 +14,53 @@ def render_items(items):
         title = item.get('title', '')
         image = item.get('image', '')
         description = item.get('description', '')
+        date_or_time = item.get('time') or item.get('date') or ''
+        location = item.get('location') or ''
+        image_base = item.get('imageBase')
+
+        if image_base:
+            src = image_base.strip()
+            def candidate(w: int) -> str:
+                if src.lower().endswith('.jpg'):
+                    return src[:-4] + f'_w{w}.jpg'
+                return src + f'_w{w}.jpg'
+            def candidate_webp(w: int) -> str:
+                if src.lower().endswith('.jpg'):
+                    return src[:-4] + f'_w{w}.webp'
+                return src + f'_w{w}.webp'
+
+            image_html = (
+                f'<picture>'
+                f'<source type="image/webp" media="(max-width: 640px)" srcset="{candidate_webp(960)} 1x, {candidate_webp(1600)} 2x">'
+                f'<source type="image/webp" media="(max-width: 1280px)" srcset="{candidate_webp(1280)} 1x, {candidate_webp(1920)} 2x">'
+                f'<source type="image/webp" media="(min-width: 1281px)" srcset="{candidate_webp(1920)} 1x, {candidate_webp(2560)} 2x">'
+                f'<source media="(max-width: 640px)" srcset="{candidate(960)} 1x, {candidate(1600)} 2x">'
+                f'<source media="(max-width: 1280px)" srcset="{candidate(1280)} 1x, {candidate(1920)} 2x">'
+                f'<source media="(min-width: 1281px)" srcset="{candidate(1920)} 1x, {candidate(2560)} 2x">'
+                f'<img class="publish-image" src="{candidate(1920)}" alt="{title}">'
+                f'</picture>'
+            )
+        else:
+            image_html = f'<img class="publish-image" src="{image}" alt="{title}"/>'
+
+        # 組合時間/地點（若有）
+        meta_html = ''
+        meta_parts = []
+        if date_or_time:
+            meta_parts.append(f'<span class="publish-meta-time">{date_or_time}</span>')
+        if location:
+            meta_parts.append(f'<span class="publish-meta-location">{location}</span>')
+        if meta_parts:
+            meta_html = '<div class="publish-meta">' + ' · '.join(meta_parts) + '</div>'
+
         html_parts.append(
             f'''<div class="publish-item">
   <div class="publish-cover">
-    <img class="publish-image" src="{image}" alt="{title}"/>
+    {image_html}
   </div>
   <div class="publish-desc">
     <div class="publish-title">{title}</div>
+    {meta_html}
     <p>{description}</p>
   </div>
 </div>'''

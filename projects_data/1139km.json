@@ -1,10 +1,52 @@
 {
   "slug": "1139km",
   "title": "1139KM",
+  "rawDir": "projects_data/1139km",
+  "baseDir": "projects_data/1139km/images",
   "slides": [
-    { "src": "410.jpg", "alt": "1139KM 1" },
-    { "src": "portrait.jpg", "alt": "1139KM 2" }
+    {
+      "src": "01.jpg",
+      "alt": "1139KM 1"
+    },
+    {
+      "src": "02.jpg",
+      "alt": "1139KM 2"
+    },
+    {
+      "src": "03.jpg",
+      "alt": "1139KM 3"
+    },
+    {
+      "src": "04.jpg",
+      "alt": "1139KM 4"
+    },
+    {
+      "src": "05.jpg",
+      "alt": "1139KM 5"
+    },
+    {
+      "src": "06.jpg",
+      "alt": "1139KM 6"
+    },
+    {
+      "src": "07.jpg",
+      "alt": "1139KM 7"
+    },
+    {
+      "src": "08.jpg",
+      "alt": "1139KM 8"
+    },
+    {
+      "src": "09.jpg",
+      "alt": "1139KM 9"
+    },
+    {
+      "src": "10.jpg",
+      "alt": "1139KM 10"
+    },
+    {
+      "src": "11.jpg",
+      "alt": "1139KM 11"
+    }
   ]
 }
-
-

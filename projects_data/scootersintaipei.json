@@ -1,10 +1,159 @@
 {
   "slug": "scootersintaipei",
   "title": "Scooters in Taipei",
+  "baseDir": "projects_data/scootersintaipei/images",
   "slides": [
-    { "src": "410.jpg", "alt": "Scooters 1" },
-    { "src": "portrait.jpg", "alt": "Scooters 2" }
+    {
+      "src": "01.jpg",
+      "alt": "Scooters in Taipei 1"
+    },
+    {
+      "src": "02.jpg",
+      "alt": "Scooters in Taipei 2"
+    },
+    {
+      "src": "03.jpg",
+      "alt": "Scooters in Taipei 3"
+    },
+    {
+      "src": "04.jpg",
+      "alt": "Scooters in Taipei 4"
+    },
+    {
+      "src": "05.jpg",
+      "alt": "Scooters in Taipei 5"
+    },
+    {
+      "src": "06.jpg",
+      "alt": "Scooters in Taipei 6"
+    },
+    {
+      "src": "07.jpg",
+      "alt": "Scooters in Taipei 7"
+    },
+    {
+      "src": "08.jpg",
+      "alt": "Scooters in Taipei 8"
+    },
+    {
+      "src": "09.jpg",
+      "alt": "Scooters in Taipei 9"
+    },
+    {
+      "src": "10.jpg",
+      "alt": "Scooters in Taipei 10"
+    },
+    {
+      "src": "11.jpg",
+      "alt": "Scooters in Taipei 11"
+    },
+    {
+      "src": "12.jpg",
+      "alt": "Scooters in Taipei 12"
+    },
+    {
+      "src": "13.jpg",
+      "alt": "Scooters in Taipei 13"
+    },
+    {
+      "src": "14.jpg",
+      "alt": "Scooters in Taipei 14"
+    },
+    {
+      "src": "15.jpg",
+      "alt": "Scooters in Taipei 15"
+    },
+    {
+      "src": "16.jpg",
+      "alt": "Scooters in Taipei 16"
+    },
+    {
+      "src": "17.jpg",
+      "alt": "Scooters in Taipei 17"
+    },
+    {
+      "src": "18.jpg",
+      "alt": "Scooters in Taipei 18"
+    },
+    {
+      "src": "19.jpg",
+      "alt": "Scooters in Taipei 19"
+    },
+    {
+      "src": "20.jpg",
+      "alt": "Scooters in Taipei 20"
+    },
+    {
+      "src": "21.jpg",
+      "alt": "Scooters in Taipei 21"
+    },
+    {
+      "src": "22.jpg",
+      "alt": "Scooters in Taipei 22"
+    },
+    {
+      "src": "23.jpg",
+      "alt": "Scooters in Taipei 23"
+    },
+    {
+      "src": "24.jpg",
+      "alt": "Scooters in Taipei 24"
+    },
+    {
+      "src": "25.jpg",
+      "alt": "Scooters in Taipei 25"
+    },
+    {
+      "src": "26.jpg",
+      "alt": "Scooters in Taipei 26"
+    },
+    {
+      "src": "27.jpg",
+      "alt": "Scooters in Taipei 27"
+    },
+    {
+      "src": "28.jpg",
+      "alt": "Scooters in Taipei 28"
+    },
+    {
+      "src": "29.jpg",
+      "alt": "Scooters in Taipei 29"
+    },
+    {
+      "src": "30.jpg",
+      "alt": "Scooters in Taipei 30"
+    },
+    {
+      "src": "31.jpg",
+      "alt": "Scooters in Taipei 31"
+    },
+    {
+      "src": "32.jpg",
+      "alt": "Scooters in Taipei 32"
+    },
+    {
+      "src": "33.jpg",
+      "alt": "Scooters in Taipei 33"
+    },
+    {
+      "src": "34.jpg",
+      "alt": "Scooters in Taipei 34"
+    },
+    {
+      "src": "35.jpg",
+      "alt": "Scooters in Taipei 35"
+    },
+    {
+      "src": "36.jpg",
+      "alt": "Scooters in Taipei 36"
+    },
+    {
+      "src": "37.jpg",
+      "alt": "Scooters in Taipei 37"
+    },
+    {
+      "src": "38.jpg",
+      "alt": "Scooters in Taipei 38"
+    }
   ]
 }
-
-

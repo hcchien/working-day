@@ -6,7 +6,9 @@
       "items": [
         {
           "title": "1139KM",
-          "image": "portrait.jpg",
+          "time": "2018",
+          "location": "",
+          "imageBase": "projects_data/1139km/images/03.jpg",
           "description": "I choose to use the camera to express my own ideas which were not related to personal identy. I have also tried to use the computer to change something which I hope can be different. \"Scooters in Taipei\" is my first topic, started in 2012 and continuing until this year. During this period, I have also started another project \"1139KM\", which is about the coastline of Taiwan."
         }
       ]
@@ -16,8 +18,10 @@
       "label": "EXHIBITIONS",
       "items": [
         {
-          "title": "1139KM",
-          "image": "portrait.jpg",
+          "title": "Scooters in Taipei",
+          "time": "2013",
+          "location": "TIVAC",
+          "imageBase": "projects_data/scootersintaipei/images/03.jpg",
           "description": "I choose to use the camera to express my own ideas which were not related to personal identy. I have also tried to use the computer to change something which I hope can be different. \"Scooters in Taipei\" is my first topic, started in 2012 and continuing until this year. During this period, I have also started another project \"1139KM\", which is about the coastline of Taiwan."
         }
       ]

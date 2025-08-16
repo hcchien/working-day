@@ -52,7 +52,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .menu-item {
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     font-size: 18px;
-    font-color: #999999;
+    color: #999999;
     display: inline-block;
     margin-left: 10px;
     margin-right: 10px;
@@ -60,17 +60,17 @@ html, body { max-width: 100%; overflow-x: hidden; }
 }
 
 .menu-item a {
-    font-color: #999999;
+    color: #999999;
     text-decoration: none;
 }
 
 .menu-item a:hover {
-    font-color: #999999;
+    color: #999999;
 }
 
 .item-selected {
     font-weight: bold;
-    font-color: #222;
+    color: #222;
 }
 
 /* RWD：手機版漢堡選單 */
@@ -156,9 +156,8 @@ html, body { max-width: 100%; overflow-x: hidden; }
     text-align: center;
 }
 
-/* 首頁輪播 */
+/* 首頁輪播（加入淡入淡出動畫） */
 .slide {
-  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -166,8 +165,16 @@ html, body { max-width: 100%; overflow-x: hidden; }
   height: 100%;
   object-fit: contain; /* 固定高度、維持比例，必要時左右留白或上下留白 */
   object-position: center center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 300ms ease;
 }
-.slide.active { display: block; }
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .slide-nav {
   position: absolute;
   top: 50%;
@@ -184,10 +191,20 @@ html, body { max-width: 100%; overflow-x: hidden; }
   transition: opacity 0.2s ease;
 }
 .slide-nav:hover { opacity: 1; }
-.slide-nav:focus { outline: none; }
+.slide-nav:focus { outline: 2px solid rgba(255,255,255,0.9); outline-offset: 2px; }
 .slide-nav.prev { left: 8px; background-image: url('mobile_slide_arrow.png'); transform: translateY(-50%); }
 .slide-nav.next { right: 8px; background-image: url('mobile_slide_arrow.png'); transform: translateY(-50%) rotate(180deg); }
-.sequence .dot { width: 12px; height: 12px; margin: 0 4px; cursor: pointer; }
+.sequence .dot { background: transparent; border: 0; padding: 0; margin: 0 4px; cursor: pointer; }
+.sequence .dot img { width: 12px; height: 12px; display: inline-block; }
+
+/* 視覺隱藏（無障礙用） */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
 
 @media (max-width: 768px) {
   .slideshow { width: 100%; height: 50vh; min-height: 240px; margin: 0 0 20px 0; }
@@ -226,13 +243,13 @@ html, body { max-width: 100%; overflow-x: hidden; }
     font-size: 38px;
     font-weight: 300;
     letter-spacing: 2.5px;
-    font-color: #000;
+    color: #000;
     padding-bottom: 15px;
 }
 
 .description p {
-    font-family: Ariel;
-    font-color: #202020;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #202020;
     font-size: 13px;
     letter-spacing: 2px;
     line-height: 26px;
@@ -272,14 +289,21 @@ html, body { max-width: 100%; overflow-x: hidden; }
     font-family: Gotham;
     font-size: 24px;
     font-weight: 300;
-    font-color: #000;
+    color: #000;
 }
+
+.publish-meta {
+    margin: 6px 0 10px;
+    font-size: 14px;
+    color: #555;
+}
+.publish-meta-time, .publish-meta-location { display: inline-block; }
 
 .publish-item p {
     font-family: Gotham;
     font-size: 15px;
     font-weight: 300;
-    font-color: #000;
+    color: #000;
 
 }
 

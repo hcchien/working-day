@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Raw images drop zone (not tracked)
+images/**
+!images/.gitkeep
+
+# Ignore root-level generated derivative images (but keep docs/ and projects_data/)
+*_w*.jpg
+*_w*.jpeg
+*_w*.webp
+!docs/**
+!projects_data/**
+
+# Do not ignore optimized outputs under projects_data/
+# Keep docs/ tracked for GitHub Pages
+
+
