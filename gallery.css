@@ -142,8 +142,16 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 /* tablet: 641px–1024px */
 @media (min-width: 641px) and (max-width: 1024px) {
-  /* 平板：縮小頁面左右內距，放大圖片比例，確保圖文同排且圖片不顯小 */
-  .uh { padding: 40px 24px; }
+  /* 平板：縮小頁面左右內距；選單改用漢堡避免換行 */
+  .uh { padding: 40px 24px; position: relative; display: block; }
+  .uh-menu { width: auto; display: block; }
+  .menu-toggle { display: block; position: absolute; top: 24px; right: 24px; width: 36px; height: 36px; }
+  .menu-toggle[aria-expanded="true"] { background-image: url('mobile_menuclose.png'); }
+  .menu-items { display: none; width: 100%; margin-top: 56px; gap: 0; }
+  .menu-items.open { display: block; }
+  .menu-item { display: block; margin: 8px 0; text-align: left; }
+  .menu-item a { display: inline-block; padding: 6px 0; }
+
   .gallery, .bio, .history { padding: 32px 24px 90px 24px; }
   .publish-item { display: flex; align-items: flex-start; gap: 16px; }
   .publish-cover { flex: 0 0 50%; max-width: 50%; margin: 0; padding: 0; display: block; height: clamp(220px, 36vw, 360px); overflow: hidden; }
@@ -331,4 +339,29 @@ html, body { max-width: 100%; overflow-x: hidden; }
 @media (min-width: 641px) and (max-width: 1024px) {
   .publish-desc { padding: 0; margin-right: 0; float: none; display: block; }
   .publish-item { padding: 16px 0 2px 0; }
+}
+
+/* desktop: 1025px 以上維持左圖右文的兩欄佈局 */
+@media (min-width: 1025px) {
+  .publish-item { display: flex; align-items: flex-start; gap: 20px; }
+  .publish-cover { flex: 0 0 58%; max-width: 58%; margin: 0; padding: 0; display: block; }
+  .publish-desc { flex: 1 1 42%; max-width: 42%; margin-right: 0; padding: 0 0 0 35px; float: none; display: block; }
+  .publish-image { width: 100%; height: auto; display: block; object-fit: cover; }
+}
+
+/* 超小螢幕（<400px）：上下堆疊（上圖下文） */
+@media (max-width: 400px) {
+  .publish-item { display: block; gap: 0; padding: 12px 0 20px 0; }
+  .publish-cover { width: 100%; max-width: 100%; height: auto; margin: 0; padding: 0; }
+  .publish-image { width: 100%; height: auto; display: block; object-fit: cover; }
+  .publish-desc { width: 100%; max-width: 100%; margin: 8px 0 0 0; padding: 0; float: none; }
+}
+
+/* 小於等於 645px：改為上下排列（上圖下文），顯示描述文字 */
+@media (max-width: 645px) {
+  .publish-item { display: block; gap: 0; padding: 12px 0 20px 0; }
+  .publish-cover { width: 100%; max-width: 100%; height: auto; margin: 0; padding: 0; }
+  .publish-image { width: 100%; max-width: 100%; height: auto; display: block; object-fit: cover; }
+  .publish-desc { width: 100%; max-width: 100%; margin-right: 0; padding: 8px 0 0 0; float: none; }
+  .publish-item p { display: block; }
 }
