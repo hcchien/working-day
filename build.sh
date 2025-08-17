@@ -100,6 +100,13 @@ python3 build_project_pages.py
 python3 build_bio.py
 unset LOCALE
 
+# Normalize any remaining zh *.static.html into *.html (safety net)
+for f in "${OUT_DIR}/zh"/*.static.html; do
+  [ -e "$f" ] || continue
+  base="$(basename "$f" .static.html)"
+  mv -f "$f" "${OUT_DIR}/zh/${base}.html"
+done
+
 echo "[post] Inject unified header menu into docs/*.html"
 python3 inject_menu.py
 
